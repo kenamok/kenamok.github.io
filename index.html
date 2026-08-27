@@ -1,60 +1,359 @@
-/* =========================================
-   TAMBAHAN TEKSTUR WHEAT-PASTE & CORETAN
-   ========================================= */
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEN AMOK /// RAW PORTFOLIO & MERCH</title>
+    <style>
+        /* RESET & BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg-color: #DFFF00; /* Neon Yellow */
+            --main-color: #000000;
+            --accent-color: #0000FF; /* Electric Blue */
+            --white: #ffffff;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--main-color);
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+        h1, h2, h3, h4, .impact {
+            font-family: 'Impact', sans-serif;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        a {
+            color: var(--main-color);
+            text-decoration: none;
+        }
 
-/* 1. Tekstur Kertas Kasar & Noda Lem di Background Utama */
-body {
-    background-color: #d8d6d0; /* Warna dasar tembok/kertas kusam */
-    
-    /* Menggunakan SVG Data URI untuk tekstur 'grain/noise' jalanan dipadu dengan gradien noda */
-    background-image: 
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E"),
-        radial-gradient(circle at 15% 25%, rgba(0, 0, 0, 0.08) 0%, transparent 30%),
-        radial-gradient(circle at 85% 75%, rgba(0, 0, 0, 0.06) 0%, transparent 40%);
-    background-blend-mode: multiply;
-}
+        /* BRUTALIST UI ELEMENTS */
+        .brutal-border {
+            border: 6px solid var(--main-color);
+        }
+        .brutal-shadow {
+            box-shadow: 15px 15px 0px var(--accent-color);
+        }
+        .brutal-shadow:hover {
+            box-shadow: -15px -15px 0px var(--main-color);
+            transform: translate(5px, 5px);
+            transition: all 0.1s steps(2);
+        }
 
-/* 2. Layer Coretan (Graffiti) Overlay */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* Sangat penting agar link tetap bisa diklik */
-    z-index: 9999;
-    
-    /* GANTI URL DI BAWAH dengan file .png transparan coretan Anda */
-    background-image: url('path-ke-gambar-coretan-transparan.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.85;
-    mix-blend-mode: difference; /* Memberikan efek kontras brutalist ekstrim pada warna di bawahnya */
-}
+        /* NAVIGATION (STICKY & OBNOXIOUS) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--main-color);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            z-index: 9999;
+            border-bottom: 5px solid var(--accent-color);
+        }
+        nav a {
+            color: var(--bg-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            padding: 5px 10px;
+        }
+        nav a:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
 
-/* 3. Modifikasi Main Wrapper menjadi Poster Sobek (Torn Paper) */
-.main-wrapper {
-    background-color: #ffffff;
-    /* Membuat pinggiran menjadi tidak rata ala poster yang ditempel kasar */
-    clip-path: polygon(
-        1% 1%, 99% 0%, 100% 98%, 0% 100%, 2% 48%
-    );
-    border: none; /* Menghilangkan border rapi sebelumnya */
-    /* Mengganti border dengan bayangan solid tebal untuk mempertahankan kontras */
-    filter: drop-shadow(15px 15px 0px rgba(0,0,0,1)); 
-    margin: 4vw;
-}
+        /* HERO SECTION */
+        header {
+            padding: 150px 20px 50px 20px;
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero-title {
+            font-size: 15vw;
+            letter-spacing: -5px;
+            color: var(--bg-color);
+            -webkit-text-stroke: 4px var(--main-color);
+            text-shadow: 10px 10px 0px var(--accent-color);
+            position: relative;
+            z-index: 10;
+        }
+        .hero-title:hover {
+            color: var(--accent-color);
+            -webkit-text-stroke: 4px var(--white);
+        }
+        .hero-subtitle {
+            font-size: 3rem;
+            background: var(--main-color);
+            color: var(--white);
+            display: inline-table;
+            padding: 10px 20px;
+            transform: rotate(-3deg);
+            margin-top: -20px;
+            z-index: 11;
+            position: relative;
+        }
+        
+        /* ROTATING BADGE */
+        .badge {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            background: var(--accent-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 4px solid var(--main-color);
+            animation: spin 10s linear infinite;
+            z-index: 5;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* 4. Tekstur Industrial pada Card (Kertas Fotokopi) */
-.brutal-card {
-    /* Menambahkan pola garis-garis kasar (halftone/scanlines) */
-    background-image: repeating-linear-gradient(
-        45deg,
-        rgba(0,0,0,0.03) 0px,
-        rgba(0,0,0,0.03) 2px,
-        transparent 2px,
-        transparent 4px
-    );
-    border: 6px solid #000;
-}
+        /* MARQUEE */
+        .marquee-container {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            font-size: 3rem;
+            padding: 10px 0;
+            border-top: 6px solid var(--main-color);
+            border-bottom: 6px solid var(--main-color);
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 10s linear infinite;
+        }
+        @keyframes scroll { 100% { transform: translateX(-50%); } }
+
+        /* SECTIONS */
+        section {
+            padding: 80px 5%;
+            border-bottom: 10px solid var(--main-color);
+        }
+        .section-header {
+            font-size: 6vw;
+            margin-bottom: 40px;
+            background: var(--main-color);
+            color: var(--bg-color);
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        /* GRID LAYOUTS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        /* ABOUT */
+        .about-box {
+            background: var(--white);
+            padding: 40px;
+            font-size: 1.5rem;
+            line-height: 1.4;
+            position: relative;
+        }
+        .about-box::after {
+            content: "EST. 2026";
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 10px;
+            font-size: 2rem;
+            font-family: 'Impact';
+            transform: rotate(5deg);
+        }
+
+        /* MERCH SECTION (NEW) */
+        #merch {
+            background-color: var(--accent-color);
+        }
+        #merch .section-header {
+            background: var(--bg-color);
+            color: var(--main-color);
+        }
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+        .merch-item {
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .merch-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-bottom: 6px solid var(--main-color);
+            background: #ccc; /* fallback */
+        }
+        .merch-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .merch-price {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            background: var(--bg-color);
+            font-size: 2.5rem;
+            padding: 10px;
+            border: 4px solid var(--main-color);
+            transform: rotate(-10deg);
+        }
+        .buy-btn {
+            background: var(--main-color);
+            color: var(--bg-color);
+            font-size: 2rem;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-family: 'Impact';
+        }
+        .buy-btn:hover {
+            background: var(--bg-color);
+            color: var(--main-color);
+            border: 4px solid var(--main-color);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--main-color);
+            color: var(--white);
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .footer-text {
+            font-size: 8vw;
+            color: var(--main-color);
+            -webkit-text-stroke: 2px var(--white);
+        }
+        .footer-text:hover {
+            -webkit-text-stroke: 2px var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="impact">DEF BLOC</div>
+        <div>
+            <a href="#about">ABOUT</a>
+            <a href="#merch">MERCH</a>
+            <a href="#contact">CONTACT</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header>
+        <div class="badge">RAW<br>AUDIO<br>ONLY</div>
+        <h1 class="hero-title">KEN AMOK</h1>
+        <h2 class="hero-subtitle impact">MEDAN CITY HARDCORE HIP-HOP</h2>
+    </header>
+
+    <!-- CHAOTIC MARQUEE -->
+    <div class="marquee-container impact">
+        <div class="marquee-content">
+            BUY THE MERCH /// STREAM THE ALBUM /// DEF BLOC COLLECTIVE /// NO FAKE SHIT /// BUY THE MERCH /// STREAM THE ALBUM /// DEF BLOC COLLECTIVE /// NO FAKE SHIT ///
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <h2 class="section-header impact">WHO IS THIS?</h2>
+        <div class="grid-2">
+            <div class="about-box brutal-border brutal-shadow">
+                <p><b>>> SYSTEM OVERRIDE</b></p><br>
+                <p>Rapper, producer, and visual provocateur operating out of Medan, Indonesia. Mixing raw drops, underground aesthetics, and unfiltered bars.</p><br>
+                <p>We don't do clean. We do loud.</p>
+            </div>
+            <div style="background: url('https://placehold.co/600x400/000000/DFFF00?text=AMOK+VISUAL') center/cover; border: 6px solid #000;" class="brutal-shadow">
+                <!-- Placeholder for artist photo -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MERCH SECTION (NEW) -->
+    <section id="merch">
+        <h2 class="section-header impact">OFFICIAL MERCH</h2>
+        
+        <div class="merch-grid">
+            <!-- MERCH ITEM 1 -->
+            <div class="merch-item brutal-border brutal-shadow">
+                <div class="merch-price impact">Rp 250K</div>
+                <img src="https://placehold.co/400x500/FFFFFF/000000?text=TEE+GRAPHIC" alt="T-Shirt" class="merch-img">
+                <div class="merch-info">
+                    <h3 class="impact" style="font-size: 2rem;">DEF BLOC LOGO TEE</h3>
+                    <p style="margin: 10px 0;">Heavyweight cotton. Black.</p>
+                    <button class="buy-btn">PURCHASE NOW</button>
+                </div>
+            </div>
+
+            <!-- MERCH ITEM 2 -->
+            <div class="merch-item brutal-border brutal-shadow">
+                <div class="merch-price impact">Rp 450K</div>
+                <img src="https://placehold.co/400x500/000000/DFFF00?text=HOODIE" alt="Hoodie" class="merch-img">
+                <div class="merch-info">
+                    <h3 class="impact" style="font-size: 2rem;">AMOK TOUR HOODIE</h3>
+                    <p style="margin: 10px 0;">Oversized fit. Glow in the dark.</p>
+                    <button class="buy-btn">PURCHASE NOW</button>
+                </div>
+            </div>
+
+            <!-- MERCH ITEM 3 -->
+            <div class="merch-item brutal-border brutal-shadow">
+                <div class="merch-price impact">Rp 100K</div>
+                <img src="https://placehold.co/400x500/0000FF/FFFFFF?text=CASSETTE" alt="Cassette Tape" class="merch-img">
+                <div class="merch-info">
+                    <h3 class="impact" style="font-size: 2rem;">UNTITLED EP (CASSETTE)</h3>
+                    <p style="margin: 10px 0;">Limited to 50 physical copies.</p>
+                    <button class="buy-btn">PURCHASE NOW</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <h2 class="footer-text impact">NO GLAMOUR.</h2>
+        <h2 class="footer-text impact" style="margin-top: -20px; color: var(--bg-color); -webkit-text-stroke: 0;">JUST RAW AUDIO.</h2>
+        <br><br>
+        <p style="font-size: 1.5rem;">CONTACT: MANAGEMENT@DEFBLOC.COM</p>
+        <p style="margin-top: 20px;">© 2026 KEN AMOK. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>
